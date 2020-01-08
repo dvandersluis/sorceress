@@ -1,7 +1,24 @@
 ---
 os: osx
+osx_image: xcode11.3
 language: ruby
 cache: bundler
 rvm:
-  - 2.6.2
+  - 2.6.4
 before_install: gem install bundler -v 2.0.2
+
+jobs:
+  include:
+    - stage: lint
+      rvm: 2.6.4
+      addons:
+        homebrew:
+          packages:
+          - shellcheck
+      script:
+      - bundle exec rubocop
+      - shellcheck lib/**/*.sh
+
+stages:
+  - lint
+  - test

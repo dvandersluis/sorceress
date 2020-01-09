@@ -1,5 +1,5 @@
 $LOAD_PATH << File.expand_path('..', __dir__)
-require 'sorceror'
+require 'sorceress'
 
-cli = Sorceror::CLI.new
+cli = Sorceress::CLI.new
 cli.announce('Hello World!')

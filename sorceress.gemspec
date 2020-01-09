@@ -1,20 +1,20 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'sorceror/version'
+require 'sorceress/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'sorceror'
-  spec.version       = Sorceror::VERSION
+  spec.name          = 'sorceress'
+  spec.version       = Sorceress::VERSION
   spec.authors       = ['Daniel Vandersluis']
   spec.email         = ['daniel.vandersluis@gmail.com']
 
   spec.summary       = 'Extensible and configurable setup script'
-  spec.homepage      = 'https://github.com/dvandersluis/sorceror'
+  spec.homepage      = 'https://github.com/dvandersluis/sorceress'
 
   spec.metadata['allowed_push_host'] = 'https://www.rubygems.org'
 
   spec.metadata['source_code_uri'] = spec.homepage
-  spec.metadata['changelog_uri'] = 'https://github.com/dvandersluis/sorceror/CHANGES.md'
+  spec.metadata['changelog_uri'] = 'https://github.com/dvandersluis/sorceress/CHANGES.md'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

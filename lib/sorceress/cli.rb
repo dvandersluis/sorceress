@@ -1,4 +1,4 @@
-module Sorceror
+module Sorceress
   class CLI
     module Colors
       RESET = "\e[0m".freeze # Text Reset

@@ -32,8 +32,12 @@ announce() {
   cecho BGreen "$1"
 }
 
-info() {
+notice() {
   cecho BBlue "$1"
+}
+
+welcome() {
+  cecho BPurple "$1"
 }
 
 warning() {

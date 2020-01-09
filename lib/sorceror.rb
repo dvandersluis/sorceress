@@ -1,6 +1,6 @@
 require 'sorceror/version'
 
+require 'sorceror/cli'
+
 module Sorceror
-  class Error < StandardError; end
-  # Your code goes here...
 end

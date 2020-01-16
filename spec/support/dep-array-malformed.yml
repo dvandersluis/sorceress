@@ -1,0 +1,9 @@
+dependencies:
+  - ruby:
+    version: 2.6.5
+    foo: bar
+  - mysql:
+    version: ~> 8.0.17
+  - elasticsearch:
+    version: ~> 7.3.2
+  - foo

@@ -3,7 +3,7 @@ require 'yaml'
 module Sorceress
   class Config
     BLANK_CONFIG = {
-      dependencies: {}
+      'dependencies' => {}
     }.freeze
 
     def initialize(config_file = nil)
@@ -11,8 +11,8 @@ module Sorceress
     end
 
     def dependencies
-      dependencies = default_config[:dependencies].map { |dep| [dep.to_sym, {}] }.to_h
-      dependencies.merge(process_dependencies(config[:dependencies]))
+      dependencies = default_config['dependencies'].map { |dep| [dep, {}] }.to_h
+      dependencies.merge(process_dependencies(config['dependencies']))
     end
 
   private
@@ -49,7 +49,7 @@ module Sorceress
             dep
           end
         else
-          { dep.to_sym => {} }
+          { dep => {} }
         end
       end
 
@@ -57,7 +57,12 @@ module Sorceress
     end
 
     def load_yaml(path)
-      Psych.safe_load(File.read(path), symbolize_names: true)
+      if YAML.respond_to?(:safe_load)
+        YAML.safe_load(File.read(path))
+      else
+        # Ruby < 2.1 doesn't define YAML.safe_load
+        YAML.load_file(path)
+      end
     end
   end
 end

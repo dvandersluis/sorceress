@@ -11,8 +11,8 @@ RSpec.describe Sorceress::Config do
     context 'when only using the default config' do
       it 'only has the default dependencies' do
         expect(subject).to eq(
-          brew: {},
-          ruby: {}
+          'brew' => {},
+          'ruby' => {}
         )
       end
     end
@@ -20,11 +20,11 @@ RSpec.describe Sorceress::Config do
     context 'handling config formats' do
       let(:expected) do
         {
-          brew: {},
-          ruby: { version: '2.6.5', foo: 'bar' },
-          mysql: { version: '~> 8.0.17' },
-          elasticsearch: { version: '~> 7.3.2' },
-          foo: {}
+          'brew' => {},
+          'ruby' => { 'version' => '2.6.5', 'foo' => 'bar' },
+          'mysql' => { 'version' => '~> 8.0.17' },
+          'elasticsearch' => { 'version' => '~> 7.3.2' },
+          'foo' => {}
         }
       end
 
@@ -57,10 +57,10 @@ RSpec.describe Sorceress::Config do
       let(:config_file) { Sorceress.root.join('spec/support/sorceress.yml') }
       let(:expected) do
         {
-          brew: {},
-          ruby: { version: '2.6.5' },
-          mysql: { version: '~> 8.0.17' },
-          elasticsearch: { version: '~> 7.3.2' }
+          'brew' => {},
+          'ruby' => { 'version' => '2.6.5' },
+          'mysql' => { 'version' => '~> 8.0.17' },
+          'elasticsearch' => { 'version' => '~> 7.3.2' }
         }
       end
 

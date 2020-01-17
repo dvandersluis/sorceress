@@ -10,3 +10,4 @@ require 'sorceress/shims'
 
 require 'sorceress/cli'
 require 'sorceress/config'
+require 'sorceress/dependency'

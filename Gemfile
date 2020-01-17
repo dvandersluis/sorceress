@@ -5,4 +5,10 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 gemspec
 
 gem 'pry'
-gem 'rubocop_defaults', github: 'dvandersluis/rubocop_defaults', branch: 'experimental'
+
+ruby_version = Gem::Version.new(RUBY_VERSION)
+if ruby_version >= Gem::Version.new('2.6')
+  gem 'rubocop_defaults', github: 'dvandersluis/rubocop_defaults', branch: 'experimental'
+else
+  gem 'rubocop_defaults', github: 'dvandersluis/rubocop_defaults'
+end

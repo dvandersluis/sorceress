@@ -57,7 +57,7 @@ module Sorceress
     end
 
     def load_yaml(path)
-      YAML.safe_load(File.read(path), symbolize_names: true)
+      Psych.safe_load(File.read(path), symbolize_names: true)
     end
   end
 end

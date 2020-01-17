@@ -25,11 +25,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  ruby_version = Gem::Version.new(RUBY_VERSION)
-
-  if ruby_version < Gem::Version.new('2.5')
-    spec.add_dependency 'psych', '~> 3'
-  end
+  spec.add_dependency 'psych', '~> 3'
 
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec', '~> 3.9'

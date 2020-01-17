@@ -7,8 +7,7 @@ gemspec
 gem 'pry'
 
 ruby_version = Gem::Version.new(RUBY_VERSION)
-if ruby_version >= Gem::Version.new('2.6')
-  gem 'rubocop_defaults', github: 'dvandersluis/rubocop_defaults', branch: 'experimental'
-else
-  gem 'rubocop_defaults', github: 'dvandersluis/rubocop_defaults'
-end
+rubocop_defaults_opts = { github: 'dvandersluis/rubocop_defaults' }
+rubocop_defaults_opts[:branch] = 'experimental' if ruby_version >= Gem::Version.new('2.6')
+
+gem 'rubocop_defaults', rubocop_defaults_opts

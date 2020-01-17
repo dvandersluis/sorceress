@@ -32,6 +32,12 @@ jobs:
     - <<: *test_stage
       rvm: 2.2.10
       before_install: skip
+    - <<: *test_stage
+      rvm: 2.1.10
+      before_install: skip
+    - <<: *test_stage
+      rvm: 2.0.0-p648
+      before_install: skip
 
     - &install_stage
       language: bash

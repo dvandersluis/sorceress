@@ -7,6 +7,7 @@ module Sorceress
 end
 
 require 'sorceress/shims'
+require 'sorceress/spells'
 
 require 'sorceress/cli'
 require 'sorceress/config'

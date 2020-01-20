@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe Sorceress::Config do
-  let(:config_file) { nil }
+RSpec.describe Sorceress::Spellbook do
+  let(:file) { nil }
 
-  subject { described_class.new(config_file) }
+  subject { described_class.new(file) }
 
   describe '#dependencies' do
     subject { super().dependencies }
@@ -29,7 +29,7 @@ RSpec.describe Sorceress::Config do
       end
 
       context 'hash' do
-        let(:config_file) { Sorceress.root.join('spec/support/dep-hash.yml') }
+        let(:file) { Sorceress.root.join('spec/support/dep-hash.yml') }
 
         it 'merges the given config' do
           expect(subject).to eq(expected)
@@ -37,7 +37,7 @@ RSpec.describe Sorceress::Config do
       end
 
       context 'array of hashes' do
-        let(:config_file) { Sorceress.root.join('spec/support/dep-array.yml') }
+        let(:file) { Sorceress.root.join('spec/support/dep-array.yml') }
 
         it 'merges the given config' do
           expect(subject).to eq(expected)
@@ -45,7 +45,7 @@ RSpec.describe Sorceress::Config do
       end
 
       context 'array with malformed hashes' do
-        let(:config_file) { Sorceress.root.join('spec/support/dep-array-malformed.yml') }
+        let(:file) { Sorceress.root.join('spec/support/dep-array-malformed.yml') }
 
         it 'merges the given config' do
           expect(subject).to eq(expected)
@@ -54,7 +54,7 @@ RSpec.describe Sorceress::Config do
     end
 
     context 'when supplementing the config' do
-      let(:config_file) { Sorceress.root.join('spec/support/sorceress.yml') }
+      let(:file) { Sorceress.root.join('spec/support/sorceress.yml') }
       let(:expected) do
         {
           'brew' => {},

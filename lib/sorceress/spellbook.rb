@@ -1,32 +1,34 @@
 require 'yaml'
 
 module Sorceress
-  class Config
-    BLANK_CONFIG = {
+  class Spellbook
+    # A spellbook is a set of instructions that sorceress uses to setup a new environment
+
+    EMPTY_SPELLBOOK = {
       'dependencies' => {}
     }.freeze
 
-    def initialize(config_file = nil)
-      @config_file = config_file
+    def initialize(file = nil)
+      @file = file
     end
 
     def dependencies
-      dependencies = default_config['dependencies'].map { |dep| [dep, {}] }.to_h
-      dependencies.merge(process_dependencies(config['dependencies']))
+      dependencies = default_spellbook['dependencies'].map { |dep| [dep, {}] }.to_h
+      dependencies.merge(process_dependencies(user_spellbook['dependencies']))
     end
 
   private
 
-    attr_reader :config_file
+    attr_reader :file
 
-    def default_config
-      @default_config ||= load_yaml(Sorceress.root.join('config/default.yml'))
+    def default_spellbook
+      @default_spellbook ||= load_yaml(Sorceress.root.join('config/default.yml'))
     end
 
-    def config
-      return BLANK_CONFIG unless config_file
+    def user_spellbook
+      return EMPTY_SPELLBOOK unless file
 
-      @config ||= load_yaml(config_file)
+      @user_spellbook ||= load_yaml(file)
     end
 
     def process_dependencies(dependencies)

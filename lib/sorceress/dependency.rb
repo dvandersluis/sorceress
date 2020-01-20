@@ -15,6 +15,12 @@ module Sorceress
       end
     end
 
+    def found?
+      return nil unless executable
+
+      requirement_met?
+    end
+
     def local_version
       return nil unless executable
 

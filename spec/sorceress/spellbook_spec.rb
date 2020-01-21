@@ -12,7 +12,7 @@ RSpec.describe Sorceress::Spellbook do
       it 'only has the default dependencies' do
         expect(subject).to eq(
           'brew' => {},
-          'ruby' => {}
+          'ruby' => { 'manager' => 'rbenv' }
         )
       end
     end
@@ -21,7 +21,7 @@ RSpec.describe Sorceress::Spellbook do
       let(:expected) do
         {
           'brew' => {},
-          'ruby' => { 'version' => '2.6.5', 'foo' => 'bar' },
+          'ruby' => { 'version' => '2.6.5', 'foo' => 'bar', 'manager' => 'rbenv' },
           'mysql' => { 'version' => '~> 8.0.17' },
           'elasticsearch' => { 'version' => '~> 7.3.2' },
           'foo' => {}
@@ -54,11 +54,11 @@ RSpec.describe Sorceress::Spellbook do
     end
 
     context 'when supplementing the config' do
-      let(:file) { Sorceress.root.join('spec/support/sorceress.yml') }
+      let(:file) { Sorceress.root.join('.sorceress.yml') }
       let(:expected) do
         {
           'brew' => {},
-          'ruby' => { 'version' => '2.6.5' },
+          'ruby' => { 'version' => '2.6.5', 'manager' => 'rbenv' },
           'mysql' => { 'version' => '~> 8.0.17' },
           'elasticsearch' => { 'version' => '~> 7.3.2' }
         }

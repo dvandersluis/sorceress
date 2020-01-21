@@ -13,8 +13,8 @@ module Sorceress
     end
 
     def dependencies
-      dependencies = default_spellbook['dependencies'].map { |dep| [dep, {}] }.to_h
-      dependencies.merge(process_dependencies(user_spellbook['dependencies']))
+      dependencies = process(default_spellbook['dependencies'])
+      dependencies.deep_merge(process(user_spellbook['dependencies']))
     end
 
   private
@@ -31,7 +31,7 @@ module Sorceress
       @user_spellbook ||= load_yaml(file)
     end
 
-    def process_dependencies(dependencies)
+    def process(dependencies)
       if dependencies.is_a?(Array)
         process_array(dependencies)
       elsif dependencies.is_a?(Hash)

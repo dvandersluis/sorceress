@@ -1,4 +1,3 @@
 dependencies:
   - brew
-  - ruby:
-      manager: rbenv
+  - ruby

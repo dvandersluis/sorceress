@@ -2,8 +2,12 @@ require 'spec_helper'
 
 RSpec.describe Sorceress::Spellbook do
   let(:arg) { nil }
+  let(:default_spellbook) { { 'dependencies' => dependencies } }
+  let(:dependencies) { { 'brew' => {}, 'ruby' => {} } }
 
   subject(:spellbook) { described_class.new(arg) }
+
+  before { allow(spellbook).to receive(:default_spellbook).and_return(default_spellbook) }
 
   describe '#dependencies' do
     subject { spellbook.dependencies }
@@ -12,7 +16,7 @@ RSpec.describe Sorceress::Spellbook do
       it 'only has the default dependencies' do
         expect(subject).to eq(
           'brew' => {},
-          'ruby' => { 'manager' => 'rbenv' }
+          'ruby' => {}
         )
       end
     end
@@ -21,7 +25,7 @@ RSpec.describe Sorceress::Spellbook do
       let(:expected) do
         {
           'brew' => {},
-          'ruby' => { 'version' => '2.6.5', 'foo' => 'bar', 'manager' => 'rbenv' },
+          'ruby' => { 'version' => '2.6.5', 'foo' => 'bar' },
           'mysql' => { 'version' => '~> 8.0.17' },
           'elasticsearch' => { 'version' => '~> 7.3.2' },
           'foo' => {}
@@ -54,6 +58,8 @@ RSpec.describe Sorceress::Spellbook do
     end
 
     context 'deep merge' do
+      let(:dependencies) { { 'ruby' => { 'manager' => 'rbenv' } } }
+
       context 'when there is no nested conflicting key' do
         let(:arg) do
           {
@@ -65,7 +71,6 @@ RSpec.describe Sorceress::Spellbook do
 
         it 'merges the given config' do
           expect(subject).to eq(
-            'brew' => {},
             'ruby' => { 'version' => '2.6.5', 'manager' => 'rbenv' }
           )
         end
@@ -82,7 +87,6 @@ RSpec.describe Sorceress::Spellbook do
 
         it 'merges the given config' do
           expect(subject).to eq(
-            'brew' => {},
             'ruby' => { 'manager' => 'chruby' }
           )
         end
@@ -99,7 +103,6 @@ RSpec.describe Sorceress::Spellbook do
 
         it 'ignores it' do
           expect(subject).to eq(
-            'brew' => {},
             'ruby' => {}
           )
         end
@@ -116,7 +119,6 @@ RSpec.describe Sorceress::Spellbook do
 
         it 'ignores it' do
           expect(subject).to eq(
-            'brew' => {},
             'ruby' => {}
           )
         end
@@ -128,7 +130,7 @@ RSpec.describe Sorceress::Spellbook do
       let(:expected) do
         {
           'brew' => {},
-          'ruby' => { 'version' => '2.6.5', 'manager' => 'rbenv' },
+          'ruby' => { 'version' => '2.6.5' },
           'mysql' => { 'version' => '~> 8.0.17' },
           'elasticsearch' => { 'version' => '~> 7.3.2' }
         }

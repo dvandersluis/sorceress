@@ -8,27 +8,31 @@ module Sorceress
       'dependencies' => {}
     }.freeze
 
-    def initialize(file = nil)
-      @file = file
+    def initialize(hash_or_file = nil)
+      @user_spellbook = case hash_or_file
+        when nil
+          EMPTY_SPELLBOOK
+
+        when Hash
+          hash_or_file
+
+        else
+          load_yaml(hash_or_file)
+      end
     end
 
     def dependencies
       dependencies = process(default_spellbook['dependencies'])
-      dependencies.deep_merge(process(user_spellbook['dependencies']))
+      dependencies.deep_merge!(process(user_spellbook['dependencies']))
+      dependencies.each { |_dep, metadata| metadata.reject! { |_, v| v.nil? || v == 'none' } }
     end
 
   private
 
-    attr_reader :file
+    attr_reader :user_spellbook
 
     def default_spellbook
       @default_spellbook ||= load_yaml(Sorceress.root.join('config/default.yml'))
-    end
-
-    def user_spellbook
-      return EMPTY_SPELLBOOK unless file
-
-      @user_spellbook ||= load_yaml(file)
     end
 
     def process(dependencies)

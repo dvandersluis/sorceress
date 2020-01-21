@@ -11,8 +11,8 @@ fi
 prerequisites=( ruby curl )
 
 for cmd in "${prerequisites[@]}"; do
-  printf "$cmd... "
-  result $(which $cmd) || err=1
+  printf "%s... " "$cmd"
+  result "$(which "$cmd")" || err=1
 done
 
 if [ $err ]; then

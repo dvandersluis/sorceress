@@ -12,10 +12,17 @@ jobs:
         homebrew:
           packages:
           - shellcheck
-      before_install: gem install bundler -v 2.0.2
+      before_install:
+        - gem install bundler -v 2.0.2
+      install:
+        - bundle install --jobs=3 --retry=3 --path=${BUNDLE_PATH:-vendor/bundle}
+        # Install latest version of shellcheck.
+        - wget https://storage.googleapis.com/shellcheck/shellcheck-latest.linux.x86_64.tar.xz
+        - tar --xz -xvf shellcheck-latest.linux.x86_64.tar.xz
+        - shellcheck-latest/shellcheck --version
       script:
-      - bundle exec rubocop
-      - shellcheck lib/**/*.sh
+        - bundle exec rubocop
+        - bash -c 'shopt -s globstar nullglob; shellcheck-latest/shellcheck lib/**/*.{sh,ksh,bash}'
 
     - &test_stage
       stage: test

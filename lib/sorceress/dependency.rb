@@ -3,9 +3,12 @@ module Sorceress
     VERSION_REGEX = /[0-9]+(?>\.[0-9]+)*/.freeze
     ANCHORED_VERSION_REGEX = /\A#{VERSION_REGEX}\z/.freeze
 
-    def initialize(dependency, *requirements)
+    attr_reader :dependency, :requirements, :data
+
+    def initialize(dependency, data)
       @dependency = dependency
-      @requirements = requirements
+      @requirements = Array(data.delete('version'))
+      @data = data
     end
 
     def executable
@@ -15,12 +18,6 @@ module Sorceress
       end
     end
 
-    def found?
-      return nil unless executable
-
-      requirement_met?
-    end
-
     def local_version
       return nil unless executable
 
@@ -28,6 +25,8 @@ module Sorceress
     end
 
     def install_version
+      return nil unless requirements.any?
+
       version = requirements.first.dup.gsub(/~>|>=|<=|=/, '').strip
       raise ArgumentError, "cannot determine install_version from #{requirements.join(', ')}" unless version =~ ANCHORED_VERSION_REGEX
 
@@ -41,8 +40,6 @@ module Sorceress
     end
 
   private
-
-    attr_reader :dependency, :requirements
 
     def parse_version(str)
       match = VERSION_REGEX.match(str)

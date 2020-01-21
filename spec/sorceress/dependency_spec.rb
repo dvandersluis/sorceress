@@ -5,7 +5,7 @@ RSpec.describe Sorceress::Dependency do
   let(:version) { '2.6.5' }
   let(:requirements) { nil }
 
-  subject(:dependency) { described_class.new('ruby', *requirements) }
+  subject(:dependency) { described_class.new('ruby', 'version' => requirements) }
 
   before do
     allow(dependency).to receive(:which).and_return(which)
@@ -314,34 +314,6 @@ RSpec.describe Sorceress::Dependency do
 
       it 'always returns false' do
         expect(subject).to eq(false)
-      end
-    end
-  end
-
-  describe '#found?' do
-    subject { dependency.found? }
-
-    context 'when the executable cannot be found' do
-      let(:which) { '' }
-
-      it 'returns nil' do
-        expect(subject).to be_nil
-      end
-    end
-
-    context 'when the requirements are not met' do
-      before { allow(dependency).to receive(:requirement_met?).and_return(false) }
-
-      it 'retuns false' do
-        expect(subject).to eq(false)
-      end
-    end
-
-    context 'when the requirements are met' do
-      before { allow(dependency).to receive(:requirement_met?).and_return(true) }
-
-      it 'retuns false' do
-        expect(subject).to eq(true)
       end
     end
   end

@@ -1,3 +1,8 @@
 dependencies:
   - brew
-  - ruby
+  - ruby:
+      dependencies:
+        - rvm
+        - rbenv
+        - chruby
+        - asdf

@@ -126,11 +126,18 @@ RSpec.describe Sorceress::Spellbook do
     end
 
     context 'when supplementing the config' do
+      before { allow(spellbook).to receive(:default_spellbook).and_call_original }
+
       let(:arg) { Sorceress.root.join('.sorceress.yml') }
       let(:expected) do
         {
           'brew' => {},
-          'ruby' => { 'version' => '2.6.5' },
+          'ruby' => {
+            'version' => '2.6.5',
+            'dependencies' => {
+              'manager' => %w(rbenv rvm chruby asdf)
+            }
+          },
           'mysql' => { 'version' => '~> 8.0.17' },
           'elasticsearch' => { 'version' => '~> 7.3.2' }
         }

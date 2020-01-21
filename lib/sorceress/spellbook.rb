@@ -1,4 +1,5 @@
 require 'yaml'
+require 'sorceress/spellbook/dependencies'
 
 module Sorceress
   class Spellbook
@@ -22,9 +23,7 @@ module Sorceress
     end
 
     def dependencies
-      dependencies = process(default_spellbook['dependencies'])
-      dependencies.deep_merge!(process(user_spellbook['dependencies']))
-      dependencies.each { |_dep, metadata| metadata.reject! { |_, v| v.nil? || v == 'none' } }
+      Dependencies.new(default_spellbook, user_spellbook).extract
     end
 
   private
@@ -33,33 +32,6 @@ module Sorceress
 
     def default_spellbook
       @default_spellbook ||= load_yaml(Sorceress.root.join('config/default.yml'))
-    end
-
-    def process(dependencies)
-      if dependencies.is_a?(Array)
-        process_array(dependencies)
-      elsif dependencies.is_a?(Hash)
-        dependencies.map { |key, val| [key, val.nil? ? {} : val] }.to_h
-      end
-    end
-
-    def process_array(dependencies) # rubocop:disable Metrics/MethodLength
-      dependencies.map! do |dep|
-        if dep.is_a?(Hash)
-          if dep.length > 1 && dep.first[1].nil?
-            key = dep.first[0]
-            dep.delete(key)
-
-            { key => dep }
-          else
-            dep
-          end
-        else
-          { dep => {} }
-        end
-      end
-
-      dependencies.inject({}, &:merge)
     end
 
     def load_yaml(path)

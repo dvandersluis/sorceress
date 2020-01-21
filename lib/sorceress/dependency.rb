@@ -5,6 +5,12 @@ module Sorceress
 
     attr_reader :dependency, :requirements, :data
 
+    def self.for(dependency, data)
+      return Ruby.new(data) if dependency == 'ruby'
+
+      new(dependency, data)
+    end
+
     def initialize(dependency, data)
       @dependency = dependency
       @requirements = Array(data.delete('version'))

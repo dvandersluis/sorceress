@@ -2,7 +2,8 @@ dependencies:
   - brew
   - ruby:
       dependencies:
-        - rvm
-        - rbenv
-        - chruby
-        - asdf
+        manager:
+          - rbenv
+          - rvm
+          - chruby
+          - asdf

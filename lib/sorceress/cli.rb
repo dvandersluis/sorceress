@@ -1,5 +1,5 @@
 module Sorceress
-  class CLI
+  module CLI
     module Colors
       RESET = "\e[0m".freeze # Text Reset
 

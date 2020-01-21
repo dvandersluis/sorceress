@@ -29,7 +29,7 @@ RSpec.describe Sorceress::Spellbook do
       end
 
       context 'hash' do
-        let(:file) { Sorceress.root.join('spec/support/dep-hash.yml') }
+        let(:file) { Sorceress.root.join('spec/spellbooks/dep-hash.yml') }
 
         it 'merges the given config' do
           expect(subject).to eq(expected)
@@ -37,7 +37,7 @@ RSpec.describe Sorceress::Spellbook do
       end
 
       context 'array of hashes' do
-        let(:file) { Sorceress.root.join('spec/support/dep-array.yml') }
+        let(:file) { Sorceress.root.join('spec/spellbooks/dep-array.yml') }
 
         it 'merges the given config' do
           expect(subject).to eq(expected)
@@ -45,12 +45,16 @@ RSpec.describe Sorceress::Spellbook do
       end
 
       context 'array with malformed hashes' do
-        let(:file) { Sorceress.root.join('spec/support/dep-array-malformed.yml') }
+        let(:file) { Sorceress.root.join('spec/spellbooks/dep-array-malformed.yml') }
 
         it 'merges the given config' do
           expect(subject).to eq(expected)
         end
       end
+    end
+
+    context 'deep merge' do
+      it ''
     end
 
     context 'when supplementing the config' do

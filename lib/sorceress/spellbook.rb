@@ -25,11 +25,11 @@ module Sorceress
     end
 
     def dependencies
-      Dependencies.new(default_spellbook, user_spellbook).extract
+      @dependencies ||= Dependencies.new(default_spellbook, user_spellbook).extract
     end
 
     def steps
-      Steps.new(default_spellbook, user_spellbook).extract
+      @steps ||= Steps.new(default_spellbook, user_spellbook).extract
     end
 
   private

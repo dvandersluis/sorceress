@@ -10,7 +10,7 @@ module Sorceress
 
     def artifacts
       @artifacts ||= {
-        missing_dependencies: []
+        missing_features: []
       }
     end
 

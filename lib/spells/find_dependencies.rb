@@ -6,10 +6,8 @@ module Sorceress
       spellbook.dependencies.each do |name, data|
         printf "#{name}... "
         dep = Dependency.for(name, data)
-        result(dep) || artifacts[:missing_dependencies] << dep
+        result(dep) || artifacts[:missing_features] << dep
       end
-
-      p(artifacts)
     end
 
   private

@@ -1,3 +1,4 @@
+# required tools
 dependencies:
   - brew
   - ruby:
@@ -7,3 +8,11 @@ dependencies:
           - rvm
           - chruby
           - asdf
+
+# Sorceress steps (always run regardless of any user steps)
+prerequisites:
+  - find_dependencies
+  - install_features
+
+# User steps
+steps: []

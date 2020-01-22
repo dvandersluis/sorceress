@@ -2,14 +2,15 @@ require 'spec_helper'
 
 RSpec.describe Sorceress::Spellbook do
   let(:arg) { nil }
-  let(:default_spellbook) { { 'dependencies' => dependencies } }
   let(:dependencies) { { 'brew' => {}, 'ruby' => {} } }
 
   subject(:spellbook) { described_class.new(arg) }
 
-  before { allow(spellbook).to receive(:default_spellbook).and_return(default_spellbook) }
-
   describe '#dependencies' do
+    let(:default_spellbook) { { 'dependencies' => dependencies } }
+
+    before { allow(spellbook).to receive(:default_spellbook).and_return(default_spellbook) }
+
     subject { spellbook.dependencies }
 
     context 'when only using the default config' do
@@ -145,6 +146,32 @@ RSpec.describe Sorceress::Spellbook do
 
       it 'merges the given config' do
         expect(subject).to eq(expected)
+      end
+    end
+  end
+
+  describe '#steps' do
+    subject { spellbook.steps }
+
+    context 'when only using the default config' do
+      it 'only has the default steps' do
+        expect(subject).to eq(%w(find_dependencies install_features))
+      end
+    end
+
+    context 'when the user spellbook has steps' do
+      let(:arg) { { 'steps' => %w(foo bar) } }
+
+      it 'adds the steps at the end' do
+        expect(subject).to eq(%w(find_dependencies install_features foo bar))
+      end
+    end
+
+    context 'when the user spellbook has a prerequisites block' do
+      let(:arg) { { 'prerequisites' => %w(foo bar) } }
+
+      it 'is ignored' do
+        expect(subject).to eq(%w(find_dependencies install_features))
       end
     end
   end

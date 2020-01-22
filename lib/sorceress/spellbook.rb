@@ -1,12 +1,14 @@
 require 'yaml'
 require 'sorceress/spellbook/dependencies'
+require 'sorceress/spellbook/steps'
 
 module Sorceress
   class Spellbook
     # A spellbook is a set of instructions that sorceress uses to setup a new environment
 
     EMPTY_SPELLBOOK = {
-      'dependencies' => {}
+      'dependencies' => {},
+      'steps' => {}
     }.freeze
 
     def initialize(hash_or_file = nil)
@@ -24,6 +26,10 @@ module Sorceress
 
     def dependencies
       Dependencies.new(default_spellbook, user_spellbook).extract
+    end
+
+    def steps
+      Steps.new(default_spellbook, user_spellbook).extract
     end
 
   private

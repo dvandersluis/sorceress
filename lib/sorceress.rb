@@ -25,7 +25,7 @@ require 'sorceress/cli'
 require 'sorceress/context'
 require 'sorceress/dependency'
 require 'sorceress/dependency/ruby'
-require 'sorceress/invocation'
+require 'sorceress/incantation'
 require 'sorceress/spell'
 require 'sorceress/spellbook'
 

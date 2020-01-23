@@ -8,5 +8,11 @@ inherit_mode:
 AllCops:
   TargetRubyVersion: 2.7
 
+Layout/EmptyLinesAroundExceptionHandlingKeywords:
+  Enabled: false
+
 Style/Lambda:
   EnforcedStyle: literal
+
+Style/StderrPuts:
+  Enabled: false

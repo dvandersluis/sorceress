@@ -1,5 +1,5 @@
 module Sorceress
-  class Invocation
+  class Incantation
     SEARCH_ROOTS = [Sorceress.root.join('lib/spells')].freeze
 
     def call
@@ -34,8 +34,8 @@ module Sorceress
         Sorceress::RunScript.new(path)
       end
 
-      raise SpellNotFound, "No #{spell_name} spell found" unless spell
-      raise InvalidSpell, "#{spell.class} (#{spell_name}) does not inherit from Sorceress::Spell" unless spell.class < Sorceress::Spell
+      raise SpellNotFound, spell_name, "No #{spell_name} spell found" unless spell
+      raise InvalidSpell, spell.class unless spell.class < Sorceress::Spell
 
       spell
     end

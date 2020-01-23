@@ -29,31 +29,32 @@ module Sorceress
     end
 
     def announce(msg)
-      puts
-      puts color(msg, Colors::BOLD_GREEN)
+      $stdout.puts
+      $stdout.puts color(msg, Colors::BOLD_GREEN)
     end
 
     def info(msg)
-      puts color(msg, Colors::BOLD_BLUE)
+      $stdout.puts color(msg, Colors::BOLD_BLUE)
     end
 
     def warning(msg)
-      puts color(msg, Colors::BOLD_YELLOW)
+      $stderr.puts color(msg, Colors::BOLD_YELLOW)
     end
 
     def error(msg)
-      puts color(msg, Colors::BOLD_RED)
+      $stderr.puts color(msg, Colors::BOLD_RED)
     end
 
-    def abort(msg)
-      puts
-      error(msg)
+    def abort(msg = nil)
+      $stderr.puts
+      error(msg) if msg
+      error('Sorceress was unable to successfully complete the incantation.')
       exit 1
     end
 
     def result(val)
       emoji = val ? '✅' : '❌'
-      puts emoji
+      $stdout.puts emoji
       val
     end
   end

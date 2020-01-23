@@ -3,14 +3,20 @@ module Sorceress
     SEARCH_ROOTS = [Sorceress.root.join('lib/spells')].freeze
 
     def call
-      spells = Sorceress.spellbook.steps.map do |spell|
-        find_spell(spell)
-      end
-
-      spells.each(&:call)
+      spells.each(&method(:invoke_spell))
     end
 
   private
+
+    def invoke_spell(spell)
+      spell.call
+    end
+
+    def spells
+      @spells ||= Sorceress.spellbook.steps.map do |spell|
+        find_spell(spell)
+      end
+    end
 
     def spell_name(name)
       name.to_s.split(%r{(?<=[_/])}).map do |part|
@@ -31,7 +37,7 @@ module Sorceress
       spell = if (klass = spell_class(name))
         klass.new
       elsif (path = shell_script(spell_name))
-        Sorceress::RunScript.new(path)
+        Sorceress::Spells::RunScript.new(path)
       end
 
       raise SpellNotFound, spell_name, "No #{spell_name} spell found" unless spell

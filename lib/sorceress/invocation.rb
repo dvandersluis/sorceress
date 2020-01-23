@@ -1,35 +1,54 @@
 module Sorceress
   class Invocation
+    SEARCH_ROOTS = [Sorceress.root.join('lib/spells')].freeze
+
     def call
-      Sorceress.spellbook.steps.each do |spell|
-        find_spell(spell).call
+      spells = Sorceress.spellbook.steps.map do |spell|
+        find_spell(spell)
       end
+
+      spells.each(&:call)
     end
 
   private
 
     def spell_name(name)
-      name.to_s.split('_').map(&:capitalize).join
+      name.to_s.split(%r{(?<=[_/])}).map do |part|
+        part.gsub('/', '::').gsub('_', '').capitalize
+      end.join
+    end
+
+    def spell_class(name)
+      Sorceress::Spells.const_get(name)
+
+    rescue NameError
+      nil
     end
 
     def find_spell(spell_name)
       name = spell_name(spell_name)
 
-      spell = if Sorceress.const_defined?(name)
-        Sorceress.const_get(name).new
+      spell = if (klass = spell_class(name))
+        klass.new
       elsif (path = shell_script(spell_name))
         Sorceress::RunScript.new(path)
       end
 
       raise SpellNotFound, "No #{spell_name} spell found" unless spell
-      raise InvalidSpell unless spell.class < Sorceress::Spell
+      raise InvalidSpell, "#{spell.class} (#{spell_name}) does not inherit from Sorceress::Spell" unless spell.class < Sorceress::Spell
 
       spell
     end
 
     def shell_script(spell)
-      path = Sorceress.root.join("lib/spells/#{spell}.sh")
-      path if File.exist?(path)
+      SEARCH_ROOTS.each do |root|
+        Dir.chdir(root) do
+          glob = Dir.glob("**/#{spell}.{sh,ksh,bash}")
+          return root.join(glob.first) if glob.any?
+        end
+      end
+
+      nil
     end
   end
 end

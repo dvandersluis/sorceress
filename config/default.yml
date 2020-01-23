@@ -11,8 +11,8 @@ dependencies:
 
 # Sorceress steps (always run regardless of any user steps)
 prerequisites:
-  - find_dependencies
-  - install_features
+  - core/find_dependencies
+  - core/install_features
 
 # User steps
 steps: []

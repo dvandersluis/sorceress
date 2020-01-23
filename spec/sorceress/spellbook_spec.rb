@@ -155,7 +155,7 @@ RSpec.describe Sorceress::Spellbook do
 
     context 'when only using the default config' do
       it 'only has the default steps' do
-        expect(subject).to eq(%w(find_dependencies install_features))
+        expect(subject).to eq(%w(core/find_dependencies core/install_features))
       end
     end
 
@@ -163,7 +163,7 @@ RSpec.describe Sorceress::Spellbook do
       let(:arg) { { 'steps' => %w(foo bar) } }
 
       it 'adds the steps at the end' do
-        expect(subject).to eq(%w(find_dependencies install_features foo bar))
+        expect(subject).to eq(%w(core/find_dependencies core/install_features foo bar))
       end
     end
 
@@ -171,7 +171,7 @@ RSpec.describe Sorceress::Spellbook do
       let(:arg) { { 'prerequisites' => %w(foo bar) } }
 
       it 'is ignored' do
-        expect(subject).to eq(%w(find_dependencies install_features))
+        expect(subject).to eq(%w(core/find_dependencies core/install_features))
       end
     end
   end

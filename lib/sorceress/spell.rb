@@ -1,6 +1,9 @@
+require 'sorceress/spell/find'
+
 module Sorceress
   class Spell
     include CLI
+    extend Find
 
     def context
       Sorceress.context

@@ -33,6 +33,11 @@ module Sorceress
       $stdout.puts color(msg, Colors::BOLD_GREEN)
     end
 
+    def welcome(msg)
+      $stdout.puts
+      $stdout.puts color(msg, Colors::BOLD_PURPLE)
+    end
+
     def info(msg)
       $stdout.puts color(msg, Colors::BOLD_BLUE)
     end

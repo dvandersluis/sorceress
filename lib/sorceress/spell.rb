@@ -1,4 +1,5 @@
 require 'sorceress/spell/find'
+require 'sorceress/spell/locate_script'
 
 module Sorceress
   class Spell

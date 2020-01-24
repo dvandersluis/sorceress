@@ -56,7 +56,8 @@ RSpec.describe Sorceress::Incantation do
     let(:steps) { %w(my_script) }
 
     before do
-      allow(Sorceress::Spell).to receive(:shell_script).with('my_script').and_return('my_script.sh')
+      allow(Sorceress::Spell::LocateScript).to receive(:find).and_call_original
+      allow(Sorceress::Spell::LocateScript).to receive(:find).with('my_script').and_return('my_script.sh')
     end
 
     it 'invokes it' do

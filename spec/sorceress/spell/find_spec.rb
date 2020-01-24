@@ -3,6 +3,12 @@ require 'spec_helper'
 RSpec.describe Sorceress::Spell::Find do
   subject(:klass) { Class.new { extend Sorceress::Spell::Find } }
 
+  before(shell: true) do
+    allow(Sorceress::Spell::LocateScript).to receive(:find) do |name|
+      name.end_with?('.sh') ? name : "#{name}.sh"
+    end
+  end
+
   describe '#find' do
     subject { klass.find(spell) }
 
@@ -32,16 +38,23 @@ RSpec.describe Sorceress::Spell::Find do
       end
     end
 
-    context 'with a valid shell spell' do
+    context 'with a valid shell spell', shell: true do
       let(:spell) { 'my_script' }
-
-      before do
-        allow(klass).to receive(:shell_script).with('my_script').and_return('my_script.sh')
-      end
 
       it 'invokes it' do
         expect(subject).to be_a(Sorceress::Spells::RunScript)
         expect(subject.script_path).to eq('my_script.sh')
+        expect(subject.arguments).to be_empty
+      end
+    end
+
+    context 'with a valid shell spell and arguments', shell: true do
+      subject { klass.find('my_script', shell_args: %w(foo bar)) }
+
+      it 'invokes it' do
+        expect(subject).to be_a(Sorceress::Spells::RunScript)
+        expect(subject.script_path).to eq('my_script.sh')
+        expect(subject.arguments).to eq(%w(foo bar))
       end
     end
   end
@@ -75,16 +88,22 @@ RSpec.describe Sorceress::Spell::Find do
       end
     end
 
-    context 'with a valid shell spell' do
+    context 'with a valid shell spell', shell: true do
       let(:spell) { 'my_script' }
-
-      before do
-        allow(klass).to receive(:shell_script).with('my_script').and_return('my_script.sh')
-      end
 
       it 'invokes it' do
         expect(subject).to be_a(Sorceress::Spells::RunScript)
         expect(subject.script_path).to eq('my_script.sh')
+      end
+    end
+
+    context 'with a valid shell spell and arguments', shell: true do
+      subject { klass.find!('my_script', shell_args: %w(foo bar)) }
+
+      it 'invokes it' do
+        expect(subject).to be_a(Sorceress::Spells::RunScript)
+        expect(subject.script_path).to eq('my_script.sh')
+        expect(subject.arguments).to eq(%w(foo bar))
       end
     end
   end

@@ -1,17 +1,18 @@
 module Sorceress
   module Spells
     class RunScript < Spell
-      def initialize(script_path)
-        @script_path = script_path
+      attr_reader :script_path, :arguments
+
+      def initialize(script_path, *arguments)
+        @script_path = LocateScript.find(script_path)
+        @arguments = arguments
       end
 
       def call
-        announce("Running #{script_path}")
+        message = "Running #{script_path}"
+        message << " with arguments #{arguments.join(' ')}" if arguments.any?
+        announce(message)
       end
-
-    private
-
-      attr_reader :script_path
     end
   end
 end

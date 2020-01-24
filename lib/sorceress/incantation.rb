@@ -12,7 +12,7 @@ module Sorceress
 
     def spells
       @spells ||= Sorceress.spellbook.steps.map do |spell|
-        Spell.find(spell)
+        Spell.find!(spell)
       end
     end
   end

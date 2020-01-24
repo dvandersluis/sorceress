@@ -3,19 +3,19 @@ module Sorceress
     module Find
       SEARCH_ROOTS = [Sorceress.root.join('lib/spells')].freeze
 
-      def find(spell_name)
+      def find(spell_name, raise: false)
         name = spell_name(spell_name)
 
-        spell = if (klass = spell_class(name))
-          klass.new
+        if (klass = spell_class(name))
+          return klass.new if klass < Sorceress::Spell
+          raise InvalidSpell, klass if raise
         elsif (path = shell_script(spell_name))
           Sorceress::Spells::RunScript.new(path)
         end
+      end
 
-        raise SpellNotFound, spell_name, "No #{spell_name} spell found" unless spell
-        raise InvalidSpell, spell.class unless spell.class < Sorceress::Spell
-
-        spell
+      def find!(spell_name)
+        find(spell_name, raise: true) || raise(SpellNotFound, spell_name)
       end
 
     private

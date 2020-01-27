@@ -9,7 +9,20 @@ module Sorceress
         abort(e.message)
 
       rescue StandardError => e
-        abort(e.message)
+        if ENV['DEBUG']
+          debug(e)
+        else
+          abort(e.message)
+        end
+      end
+
+    private
+
+      def debug(exception)
+        $stderr.puts
+        error(exception.message)
+        $stderr.puts exception.backtrace.join("\n")
+        abort
       end
     end
   end

@@ -14,12 +14,15 @@ module Sorceress
 
       private
 
-        def dependency_wrong_version?(dep)
-          dep.executable && !dep.requirement_met?
+        def skip_check?
+          !spellbook.fetch('check_dependencies', true)
         end
 
         def result(dep)
-          if dep.requirement_met?
+          if skip_check?
+            puts '❌'
+            return false
+          elsif dep.requirement_met?
             puts '✅'
             return true
           end

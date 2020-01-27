@@ -1,9 +1,13 @@
+require 'forwardable'
 require 'yaml'
 require 'sorceress/spellbook/merge_dependencies'
 
 module Sorceress
   class Spellbook
     # A spellbook is a set of instructions that sorceress uses to setup a new environment
+
+    extend Forwardable
+    def_delegator :spellbook, :fetch
 
     EMPTY_SPELLBOOK = {
       'dependencies' => {},

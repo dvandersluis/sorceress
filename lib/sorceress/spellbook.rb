@@ -1,6 +1,5 @@
 require 'yaml'
-require 'sorceress/spellbook/dependencies'
-require 'sorceress/spellbook/steps'
+require 'sorceress/spellbook/merge_dependencies'
 
 module Sorceress
   class Spellbook
@@ -25,11 +24,13 @@ module Sorceress
     end
 
     def dependencies
-      @dependencies ||= Dependencies.new(default_spellbook, user_spellbook).extract
+      @dependencies ||= spellbook['dependencies']
     end
 
     def steps
-      @steps ||= Steps.new(default_spellbook, user_spellbook).extract
+      @steps ||= begin
+        spellbook['prerequisites'].concat(Array(spellbook['steps']))
+      end
     end
 
   private
@@ -38,6 +39,19 @@ module Sorceress
 
     def default_spellbook
       @default_spellbook ||= load_yaml(Sorceress.root.join('config/default.yml'))
+    end
+
+    def spellbook
+      @spellbook ||= default_spellbook.merge(user_spellbook) do |key, default, user|
+        if key == 'dependencies'
+          MergeDependencies.call(default, user)
+        elsif key == 'prerequisites'
+          # user spellbooks are not allowed to define prerequisites
+          default
+        else
+          user
+        end
+      end
     end
 
     def load_yaml(path)

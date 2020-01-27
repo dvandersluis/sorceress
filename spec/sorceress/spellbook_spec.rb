@@ -139,8 +139,8 @@ RSpec.describe Sorceress::Spellbook do
               'manager' => %w(rbenv rvm chruby asdf)
             }
           },
-          'mysql' => { 'version' => '~> 8.0.17' },
-          'elasticsearch' => { 'version' => '~> 7.3.2' }
+          'mysql' => { 'version' => '~> 8.0.19' },
+          'elasticsearch' => { 'version' => '~> 7.4' }
         }
       end
 

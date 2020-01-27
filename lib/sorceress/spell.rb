@@ -6,6 +6,12 @@ module Sorceress
     include CLI
     extend Find
 
+    attr_reader :data
+
+    def initialize(data = nil)
+      @data = data
+    end
+
     def context
       Sorceress.context
     end

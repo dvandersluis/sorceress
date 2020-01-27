@@ -4,6 +4,7 @@ module Sorceress
     ANCHORED_VERSION_REGEX = /\A#{VERSION_REGEX}\z/.freeze
 
     attr_reader :dependency, :requirements, :data
+    alias_method :name, :dependency
 
     def self.for(dependency, data)
       return Ruby.new(data) if dependency == 'ruby'

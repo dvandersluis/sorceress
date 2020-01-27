@@ -19,4 +19,10 @@ RSpec.configure do |config|
 
   config.order = :random
   Kernel.srand(config.seed)
+
+  config.before(mock_shell_locate: true) do
+    allow(Sorceress::Spell::LocateScript).to receive(:find) do |name|
+      name.end_with?('.sh') ? name : "#{name}.sh"
+    end
+  end
 end

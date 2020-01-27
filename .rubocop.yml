@@ -11,6 +11,9 @@ AllCops:
 Layout/EmptyLinesAroundExceptionHandlingKeywords:
   Enabled: false
 
+RSpec/FilePath:
+  Enabled: false
+
 Style/Lambda:
   EnforcedStyle: literal
 

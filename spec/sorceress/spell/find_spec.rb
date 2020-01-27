@@ -3,12 +3,6 @@ require 'spec_helper'
 RSpec.describe Sorceress::Spell::Find do
   subject(:klass) { Class.new { extend Sorceress::Spell::Find } }
 
-  before(shell: true) do
-    allow(Sorceress::Spell::LocateScript).to receive(:find) do |name|
-      name.end_with?('.sh') ? name : "#{name}.sh"
-    end
-  end
-
   describe '#find' do
     subject { klass.find(spell) }
 
@@ -38,7 +32,7 @@ RSpec.describe Sorceress::Spell::Find do
       end
     end
 
-    context 'with a valid shell spell', shell: true do
+    context 'with a valid shell spell', mock_shell_locate: true do
       let(:spell) { 'my_script' }
 
       it 'invokes it' do
@@ -48,7 +42,7 @@ RSpec.describe Sorceress::Spell::Find do
       end
     end
 
-    context 'with a valid shell spell and arguments', shell: true do
+    context 'with a valid shell spell and arguments', mock_shell_locate: true do
       subject { klass.find('my_script', shell_args: %w(foo bar)) }
 
       it 'invokes it' do
@@ -88,7 +82,7 @@ RSpec.describe Sorceress::Spell::Find do
       end
     end
 
-    context 'with a valid shell spell', shell: true do
+    context 'with a valid shell spell', mock_shell_locate: true do
       let(:spell) { 'my_script' }
 
       it 'invokes it' do
@@ -97,7 +91,7 @@ RSpec.describe Sorceress::Spell::Find do
       end
     end
 
-    context 'with a valid shell spell and arguments', shell: true do
+    context 'with a valid shell spell and arguments', mock_shell_locate: true do
       subject { klass.find!('my_script', shell_args: %w(foo bar)) }
 
       it 'invokes it' do

@@ -9,9 +9,7 @@ module Sorceress
       end
 
       def call
-        message = "Running #{script_path}"
-        message << " with arguments #{arguments.join(' ')}" if arguments.any?
-        announce(message)
+        system(script_path.to_s, *arguments, exception: true)
       end
     end
   end

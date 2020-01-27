@@ -5,7 +5,7 @@ module Sorceress
 
       def initialize(script_path, *arguments)
         @script_path = LocateScript.find(script_path)
-        @arguments = arguments
+        @arguments = arguments.compact
       end
 
       def call

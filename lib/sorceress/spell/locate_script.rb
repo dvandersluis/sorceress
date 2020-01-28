@@ -4,7 +4,7 @@ module Sorceress
       SEARCH_ROOTS = [Sorceress.root.join('lib/spells')].freeze
 
       def self.find(name)
-        return name if File.exist?(name)
+        return name if File.exist?(name) || !`which #{name}`.empty?
 
         SEARCH_ROOTS.each do |root|
           Dir.chdir(root) do

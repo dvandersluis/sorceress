@@ -15,6 +15,10 @@ module Sorceress
     def context
       Context.instance
     end
+
+    def debug_mode?
+      ENV['DEBUG']
+    end
   end
 end
 

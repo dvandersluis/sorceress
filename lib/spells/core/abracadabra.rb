@@ -9,7 +9,7 @@ module Sorceress
         abort(e.message)
 
       rescue StandardError => e
-        if ENV['DEBUG']
+        if Sorceress.debug_mode?
           debug(e)
         else
           abort(e.message)

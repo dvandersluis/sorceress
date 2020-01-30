@@ -53,7 +53,7 @@ module Sorceress
     def abort(msg = nil)
       $stderr.puts
       error(msg) if msg
-      error('Sorceress was unable to successfully complete the incantation.')
+      error('Sorceress was unable to successfully perform the incantation.')
       exit 1
     end
 

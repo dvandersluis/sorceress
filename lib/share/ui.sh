@@ -24,7 +24,11 @@ export BCyan='\033[1;36m'        # Cyan
 export BWhite='\033[1;37m'       # White
 
 cecho(){
-  printf "${!1}%s$NC\n" "$2"
+  if [ $# -eq 3 ]; then
+    printf "${!1}%s$NC " "$2"
+  else
+    printf "${!1}%s$NC\n" "$2"
+  fi
 }
 
 announce() {
@@ -34,6 +38,10 @@ announce() {
 
 notice() {
   cecho BBlue "$1"
+}
+
+step() {
+  cecho BBlue "- $1" false
 }
 
 welcome() {
@@ -48,9 +56,16 @@ error() {
   >&2 cecho BRed "$1"
 }
 
+fail() {
+  res=$?
+  cecho BRed "$1"
+  exit $res
+}
+
 abort() {
   echo
   error "$1"
+  error "Sorceress was unable to successfully perform the incantation."
   exit 1
 }
 
@@ -67,4 +82,4 @@ result() {
   return $ret
 }
 
-export -f cecho announce notice welcome warning error abort result
+export -f cecho announce notice step welcome warning error fail abort result

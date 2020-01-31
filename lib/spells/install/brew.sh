@@ -17,8 +17,6 @@ install_brew() {
 
   # shellcheck disable=SC2016
   run_command '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
-
-  long_result
 }
 
 announce 'Installing Homebrew'

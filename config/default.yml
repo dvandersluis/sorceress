@@ -7,7 +7,7 @@ dependencies:
           - rbenv
           - rvm
           - chruby
-          - asdf
+          - asdf-ruby
 
 # Sorceress steps (always run regardless of any user steps)
 prerequisites:

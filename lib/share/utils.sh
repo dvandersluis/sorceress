@@ -15,19 +15,27 @@ abort() {
 }
 
 run_spell() {
-  "lib/spells/$1.sh" "${@:2}"
+  if [ -f "lib/spells/$1.sh" ]; then
+    "lib/spells/$1.sh" "${@:2}"
+  else
+    return 1
+  fi
 }
 
 # Output and run a command
 run_command() {
-  cecho Grey "→ $*"
+  (
+    IFS=' '
+    cecho Grey "→ $*"
+  )
+
   eval "$* &>/dev/null"
   res=$?
   return $res
 }
 
 version() {
-  echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1, $2, $3, $4); }';
+  echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1, $2, $3, $4); }'
 }
 
 # Find the closest matching version among a list

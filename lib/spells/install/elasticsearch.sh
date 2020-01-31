@@ -27,6 +27,7 @@ find_formula() {
 
 install() {
   announce "Installing elasticsearch v$version"
+  run_command brew tap elastic/tap
   run_command brew install "$formula"
 }
 
@@ -48,7 +49,7 @@ warn_upgrade() {
 }
 
 do_install() {
-  if brew list elasticsearch-full &>/dev/null; then
+  if brew_installed elasticsearch-full; then
     upgrade
   else
     install
@@ -60,4 +61,3 @@ if [ -n "$version" ] && [ "$(version "$version")" -lt "$(version "7")" ]; then
 fi
 
 find_formula && do_install
-long_result

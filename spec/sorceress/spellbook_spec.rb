@@ -136,7 +136,7 @@ RSpec.describe Sorceress::Spellbook do
           'ruby' => {
             'version' => '2.6.5',
             'dependencies' => {
-              'manager' => %w(rbenv rvm chruby asdf)
+              'manager' => %w(rbenv rvm chruby asdf-ruby)
             }
           },
           'mysql' => { 'version' => '~> 8.0.19' },

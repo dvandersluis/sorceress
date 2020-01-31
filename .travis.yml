@@ -52,7 +52,7 @@ jobs:
       os: osx
       osx_image: xcode11.3 # macOS 10.14 Mojave
       script:
-        - ./start.sh
+        - DEBUG=true ./start.sh
     - <<: *install_stage
       osx_image: xcode9.4 # macOS 10.13 High Sierra
     - <<: *install_stage

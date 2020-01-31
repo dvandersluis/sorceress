@@ -27,9 +27,9 @@ run_command() {
   (
     IFS=' '
     cecho Grey "→ $*"
+    eval "$* &>/dev/null"
   )
 
-  eval "$* &>/dev/null"
   res=$?
   return $res
 }

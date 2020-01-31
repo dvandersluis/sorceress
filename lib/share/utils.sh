@@ -1,6 +1,19 @@
 #!/bin/bash
 # shellcheck disable=SC1090
 
+fail() {
+  res=$?
+  cecho BRed "$1"
+  exit $res
+}
+
+abort() {
+  echo
+  error "$1"
+  error "Sorceress was unable to successfully perform the incantation."
+  exit 1
+}
+
 run_spell() {
   "lib/spells/$1.sh" "${@:2}"
 }
@@ -38,4 +51,4 @@ find_version() {
   export version
 }
 
-export -f run_spell run_command version find_version
+export -f fail abort run_spell run_command version find_version

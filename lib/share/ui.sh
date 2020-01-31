@@ -71,19 +71,6 @@ error() {
   >&2 cecho BRed "$1"
 }
 
-fail() {
-  res=$?
-  cecho BRed "$1"
-  exit $res
-}
-
-abort() {
-  echo
-  error "$1"
-  error "Sorceress was unable to successfully perform the incantation."
-  exit 1
-}
-
 result() {
   local ret=$?
 
@@ -111,4 +98,4 @@ long_result() {
   return $ret
 }
 
-export -f cecho bold announce note notice welcome warning error fail abort result long_result
+export -f cecho bold announce note notice welcome warning error result long_result

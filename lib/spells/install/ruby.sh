@@ -4,7 +4,7 @@ IFS=$'\n\t'
 
 version="$1"
 # shellcheck disable=SC2206
-managers=($2)
+managers=(${2:-rbenv})
 manager=
 
 . lib/share/includes.sh

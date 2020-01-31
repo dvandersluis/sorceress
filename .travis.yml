@@ -22,7 +22,7 @@ jobs:
         - shellcheck-latest/shellcheck --version
       script:
         - bundle exec rubocop
-        - bash -c 'shopt -s globstar nullglob; shellcheck-latest/shellcheck lib/**/*.{sh,ksh,bash}'
+        - bash -c 'shopt -s globstar nullglob; shellcheck-latest/shellcheck start.sh lib/**/*.{sh,ksh,bash}'
 
     - &test_stage
       stage: test

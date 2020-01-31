@@ -1,5 +1,6 @@
 #!/bin/bash
-set -o pipefail
+set -euo pipefail
+IFS=$'\n\t'
 
 . lib/share/includes.sh
 

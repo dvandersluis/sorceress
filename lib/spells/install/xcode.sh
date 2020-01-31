@@ -22,7 +22,7 @@ install() {
     tr -d '\n'
   )
 
-  run_command softwareupdate -i "$PROD"
+  run_command softwareupdate -i "\"$PROD\""
   run_command sudo xcode-select --switch /Library/Developer/CommandLineTools
 }
 

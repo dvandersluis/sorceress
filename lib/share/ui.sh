@@ -59,6 +59,10 @@ notice() {
   cecho Blue "$1"
 }
 
+echo_command() {
+  cecho Grey "→ $1"
+}
+
 welcome() {
   cecho BPurple "$1"
 }
@@ -98,4 +102,4 @@ long_result() {
   return $ret
 }
 
-export -f cecho bold announce note notice welcome warning error result long_result
+export -f cecho bold announce note notice echo_command welcome warning error result long_result

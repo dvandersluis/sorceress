@@ -35,7 +35,7 @@ run_command() {
   OLD_IFS=$IFS
   IFS=' '
 
-  cecho Grey "→ $*"
+  echo_command "$*"
 
   # shellcheck disable=SC2211
   if ! pretend?; then

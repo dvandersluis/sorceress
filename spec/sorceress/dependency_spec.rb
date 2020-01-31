@@ -317,4 +317,10 @@ RSpec.describe Sorceress::Dependency do
       end
     end
   end
+
+  describe '#[]' do
+    it 'delegates to data' do
+      expect(subject['version']).to eq(requirements)
+    end
+  end
 end

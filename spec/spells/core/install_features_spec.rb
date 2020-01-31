@@ -30,6 +30,10 @@ RSpec.describe Sorceress::Spells::Core::InstallFeatures do
     context 'when the feature has a ruby install class' do
       let(:dependency) { double('Sorceress::Dependency', name: 'ruby', install_version: '2.7.0') }
 
+      before do
+        allow(dependency).to receive(:[]).and_return(double.as_null_object)
+      end
+
       it 'invokes it' do
         subject.call
         expect(last_spell).to be_a(Sorceress::Spells::Install::Ruby)

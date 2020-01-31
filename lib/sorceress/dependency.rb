@@ -1,7 +1,12 @@
+require 'forwardable'
+
 module Sorceress
   class Dependency
     VERSION_REGEX = /[0-9]+(?>\.[0-9]+)*/.freeze
     ANCHORED_VERSION_REGEX = /\A#{VERSION_REGEX}\z/.freeze
+
+    extend Forwardable
+    def_delegator :data, :[]
 
     attr_reader :dependency, :requirements, :data
     alias_method :name, :dependency

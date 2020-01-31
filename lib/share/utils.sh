@@ -1,6 +1,14 @@
 #!/bin/bash
 # shellcheck disable=SC1090
 
+debug?() {
+  test -n "${DEBUG:-}"
+}
+
+pretend?() {
+ test -n "${PRETEND:-}"
+}
+
 fail() {
   res=$?
   cecho BRed "$1"
@@ -16,7 +24,7 @@ abort() {
 
 run_spell() {
   if [ -f "lib/spells/$1.sh" ]; then
-    "lib/spells/$1.sh" "${@:2}"
+    IFS=' ' "lib/spells/$1.sh" "${@:2}"
   else
     return 1
   fi
@@ -24,13 +32,23 @@ run_spell() {
 
 # Output and run a command
 run_command() {
-  (
-    IFS=' '
-    cecho Grey "→ $*"
-    eval "$* &>/dev/null"
-  )
+  OLD_IFS=$IFS
+  IFS=' '
+
+  cecho Grey "→ $*"
+
+  # shellcheck disable=SC2211
+  if ! pretend?; then
+    if debug?; then
+      eval "$*"
+    else
+      eval "$* &>/dev/null"
+    fi
+  fi
 
   res=$?
+
+  IFS="${OLD_IFS}"
   return $res
 }
 
@@ -59,4 +77,4 @@ find_version() {
   export version
 }
 
-export -f fail abort run_spell run_command version find_version
+export -f debug? pretend? fail abort run_spell run_command version find_version

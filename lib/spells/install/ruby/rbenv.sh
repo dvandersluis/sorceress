@@ -12,5 +12,5 @@ echo_command 'eval "$(rbenv init -)"'
 pretend? || eval "$(rbenv init -)"
 
 run_command rbenv shell "$version"
-run_command gem install bundler --conservative
+run_command gem install bundler
 run_command rbenv shell --unset

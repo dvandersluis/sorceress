@@ -1,16 +1,15 @@
 #!/bin/bash
-. lib/share/ui.sh
-. lib/share/utils.sh
 
-welcome 'Initializing Sorceress 🧙‍♀️'
-. lib/spells/core/install_prerequisites.sh
+. lib/share/includes.sh
 
-announce 'Enabling sudo access'
-sudo echo 'sudo enabled' > /dev/null
-if (( $? == 0 )); then
-  echo "Sudo enabled ✅"
-else
-  abort 'Sudo access is requested to allow scripts to use sudo as necessary.'
-fi
+(
+  welcome 'Initializing Sorceress 🧙‍♀️'
 
-ruby lib/sorceress/boot.rb
+  lib/spells/core/install_prerequisites.sh &&
+    lib/spells/core/enable_sudo.sh &&
+    ruby lib/sorceress/boot.rb
+) | tee /tmp/sorceress.log
+
+echo
+welcome "Installation complete! ✨"
+printf "Log saved at %s.\n" $(bold "/tmp/sorceress.log")

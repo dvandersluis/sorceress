@@ -1,22 +1,24 @@
 #!/bin/bash
 
 ensure_xcode() {
-  step 'Ensuring xcode command line tools are installed:'
-  result "$(xcode-select -p)" || install_xcode
+  notice 'Ensuring xcode command line tools are installed'
+  run_command xcode-select -p || install_xcode
 }
 
 install_xcode() {
-  step 'Installing xcode command line tools... '
+  notice 'Installing xcode command line tools'
   run_spell 'install/xcode'
-  result
 }
 
 install_brew() {
-  step 'Installing homebrew...'
+  notice 'Installing homebrew'
 
-  export CI=true # Skips the homebrew installer asking for input
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 1>&2
-  result
+  run_command export CI=true # Skips the homebrew installer asking for input
+
+  # shellcheck disable=SC2016
+  run_command '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"'
+
+  long_result
 }
 
 announce 'Installing Homebrew'

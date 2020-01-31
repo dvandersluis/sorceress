@@ -8,11 +8,11 @@ trap cleanup EXIT
 placeholder="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
 
 cleanup() {
-  rm -f $placeholder
+  run_command rm -f $placeholder
 }
 
 install() {
-  touch $placeholder
+  run_command touch $placeholder
 
   # Find xcode command line tools in softwareupdate
   PROD=$(softwareupdate -l |
@@ -22,8 +22,8 @@ install() {
     tr -d '\n'
   )
 
-  softwareupdate -i "$PROD" >&2
-  sudo xcode-select --switch /Library/Developer/CommandLineTools
+  run_command softwareupdate -i "$PROD"
+  run_command sudo xcode-select --switch /Library/Developer/CommandLineTools
 }
 
 # Ensure xcode isn't installed already

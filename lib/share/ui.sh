@@ -12,6 +12,7 @@ export Blue='\033[0;34m'         # Blue
 export Purple='\033[0;35m'       # Purple
 export Cyan='\033[0;36m'         # Cyan
 export White='\033[0;37m'        # White
+export Grey='\e[90m'
 
 # Bold
 export BBlack='\033[1;30m'       # Black
@@ -23,7 +24,9 @@ export BPurple='\033[1;35m'      # Purple
 export BCyan='\033[1;36m'        # Cyan
 export BWhite='\033[1;37m'       # White
 
-cecho(){
+export notice_counter=0
+
+cecho() {
   if [ $# -eq 3 ]; then
     printf "${!1}%s$NC " "$2"
   else
@@ -31,17 +34,29 @@ cecho(){
   fi
 }
 
+bold() {
+  tput bold
+  printf "%s" "$1"
+  tput sgr0
+}
+
 announce() {
   echo
-  cecho BGreen "$1"
+  cecho BGreen "⇒ $(tput smul)$1$(tput rmul)"
+}
+
+note() {
+  bold "Note: "
+  printf "%s\n" "$1"
 }
 
 notice() {
-  cecho BBlue "$1"
-}
+  notice_counter=$(( notice_counter + 1 ))
+  if [ $notice_counter -gt 1 ]; then
+    echo
+  fi
 
-step() {
-  cecho BBlue "- $1" false
+  cecho Blue "$1"
 }
 
 welcome() {
@@ -82,4 +97,18 @@ result() {
   return $ret
 }
 
-export -f cecho announce notice step welcome warning error fail abort result
+long_result() {
+  local ret=$?
+
+  echo
+
+  if (( ret == 0 )); then
+    cecho Green "✅ ${1:-Done}"
+  else
+    cecho Red "❌ Failed"
+  fi
+
+  return $ret
+}
+
+export -f cecho bold announce note notice welcome warning error fail abort result long_result

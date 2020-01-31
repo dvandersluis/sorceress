@@ -1,7 +1,5 @@
 #!/bin/bash
 
-. lib/share/ui.sh
-
 announce 'Determining Prequisites'
 
 if [[ "$OSTYPE" != "darwin"* ]]; then

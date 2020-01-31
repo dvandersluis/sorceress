@@ -28,9 +28,13 @@ module Sorceress
       "#{color}#{msg}#{Colors::RESET}"
     end
 
+    def underline(msg)
+      "\e[4m#{msg}\e[24m"
+    end
+
     def announce(msg)
       $stdout.puts
-      $stdout.puts color(msg, Colors::BOLD_GREEN)
+      $stdout.puts color("⇒ #{underline(msg)}", Colors::BOLD_GREEN)
     end
 
     def welcome(msg)

@@ -7,8 +7,6 @@ version="$1"
 managers=(${2:-rbenv})
 manager=
 
-. lib/share/includes.sh
-
 find_manager() {
   notice "Detecting ruby version managers"
 

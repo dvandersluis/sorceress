@@ -1,0 +1,77 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require_relative '../lib/sorceress/version'
+
+class String
+  def strip_heredoc
+    indent = scan(/^[ \t]*(?=\S)/).min.size
+    gsub(/^[ \t]{#{indent}}/, '')
+  end
+end
+
+SCRIPT = File.basename($PROGRAM_NAME)
+COMMANDS = -> do
+  commands = {
+    start: 'Run the setup script on this machine.'
+  }
+
+  commands.map do |name, desc|
+    format('  %-8s %s', name, desc)
+  end.join("\n")
+end.call
+
+BANNER = <<BANNER.strip_heredoc
+  \e[1m#{SCRIPT} #{Sorceress::VERSION} 🧙‍♀\e[0m
+
+  Usage: #{SCRIPT} <command> [<switches>]
+
+  Available Commands:
+  #{COMMANDS}
+
+  Global options:
+    These options are available across all commands.
+BANNER
+
+def desc(str)
+  "\n#{' ' * 6}#{str}\n\n"
+end
+
+env = {}
+parser = OptionParser.new(BANNER, 32, ' ' * 2) do |opts|
+  opts.on_tail('-V', '--version', desc('Print version information')) do
+    puts "#{SCRIPT} #{Sorceress::VERSION}"
+    exit
+  end
+
+  opts.on_tail('-h', '--help', desc('Show this message')) do
+    puts opts
+    exit
+  end
+
+  opts.on('-p', '--pretend', desc("Don't actually run any commands, just output what would be run.")) do
+    env['PRETEND'] = 'true'
+  end
+
+  opts.on('-d', '--debug', desc('Display any debugging information.')) do
+    env['DEBUG'] = 'true'
+  end
+end
+
+begin
+  parser.parse!(ARGV)
+rescue OptionParser::InvalidOption => e
+  STDERR.puts "#{SCRIPT}: invalid option #{e.args.first}\n"
+  exit 2
+end
+
+command = ARGV.shift || 'start'
+command_path = File.expand_path("../lib/commands/#{command}.sh", __dir__)
+
+unless File.exist?(command_path) && File.stat(command_path).executable?
+  puts "#{SCRIPT}: #{command} is not a valid command."
+  exit 2
+end
+
+env['SORCERESS_LIBRARIES'] = File.expand_path('../lib', __dir__)
+exec(env, [command_path, "#{SCRIPT} #{command}"], *ARGV)

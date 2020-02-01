@@ -1,5 +1,5 @@
 #!/bin/bash
 
-. lib/share/ui.sh
-. lib/share/utils.sh
-. lib/share/brew.sh
+source lib/share/ui.sh
+source lib/share/utils.sh
+source lib/share/brew.sh

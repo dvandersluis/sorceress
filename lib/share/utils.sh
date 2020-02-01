@@ -22,12 +22,21 @@ abort() {
   exit 1
 }
 
+find_spell() {
+  (
+    IFS=':'
+    find "$SORCERESS_LIBRARIES" -type f -perm +111 | grep "$1.sh"
+  ) || abort "Spell not found: $1"
+}
+
 run_spell() {
-  if [ -f "lib/spells/$1.sh" ]; then
-    IFS=' ' "lib/spells/$1.sh" "${@:2}"
-  else
-     abort "Spell not found: $1"
-  fi
+  # Keep each argument separate
+  oldifs=$IFS
+  IFS=' '
+  arguments=( "${@:2}" )
+  IFS=$oldifs
+
+  "$(find_spell "$1")" "${arguments[@]}"
 }
 
 # Output and run a command
@@ -76,4 +85,4 @@ find_version() {
   export version
 }
 
-export -f debug pretend fail abort run_spell run_command version find_version
+export -f debug pretend fail abort find_spell run_spell run_command version find_version

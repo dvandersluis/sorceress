@@ -11,7 +11,13 @@ AllCops:
 Layout/EmptyLinesAroundExceptionHandlingKeywords:
   Enabled: false
 
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
 RSpec/FilePath:
+  Enabled: false
+
+Style/FormatStringToken:
   Enabled: false
 
 Style/Lambda:

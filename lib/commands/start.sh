@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-. lib/share/includes.sh
+source lib/share/includes.sh
 
 (
   welcome 'Initializing Sorceress 🧙‍♀️'

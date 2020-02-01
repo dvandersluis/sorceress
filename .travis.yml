@@ -22,7 +22,7 @@ jobs:
         - shellcheck-latest/shellcheck --version
       script:
         - bundle exec rubocop
-        - bash -c 'shopt -s globstar nullglob; shellcheck-latest/shellcheck start.sh lib/**/*.{sh,ksh,bash}'
+        - bash -c 'shopt -s globstar nullglob; shellcheck-latest/shellcheck lib/**/*.{sh,ksh,bash}'
 
     - &test_stage
       stage: test
@@ -52,7 +52,7 @@ jobs:
       os: osx
       osx_image: xcode11.3 # macOS 10.14 Mojave
       script:
-        - DEBUG=true ./start.sh
+        - bin/sorceress start --debug
     - <<: *install_stage
       osx_image: xcode9.4 # macOS 10.13 High Sierra
     - <<: *install_stage

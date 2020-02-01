@@ -7,7 +7,7 @@ IFS=$'\n\t'
 (
   welcome 'Initializing Sorceress 🧙‍♀️'
 
-  lib/spells/core/install_prerequisites.sh &&
+  lib/spells/core/ensure_prerequisites.sh &&
     lib/spells/core/enable_sudo.sh &&
     ruby lib/sorceress/boot.rb
 ) > >(tee /tmp/sorceress.log) 2>&1

@@ -1,11 +1,11 @@
 #!/bin/bash
 # shellcheck disable=SC1090
 
-debug?() {
+debug() {
   test -n "${DEBUG:-}"
 }
 
-pretend?() {
+pretend() {
  test -n "${PRETEND:-}"
 }
 
@@ -37,9 +37,8 @@ run_command() {
 
   echo_command "$*"
 
-  # shellcheck disable=SC2211
-  if ! pretend?; then
-    if debug?; then
+  if ! pretend; then
+    if debug; then
       eval "$*"
     else
       eval "$* &>/dev/null"
@@ -77,4 +76,4 @@ find_version() {
   export version
 }
 
-export -f debug? pretend? fail abort run_spell run_command version find_version
+export -f debug pretend fail abort run_spell run_command version find_version

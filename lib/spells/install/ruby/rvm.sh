@@ -4,6 +4,9 @@ IFS=$'\n\t'
 
 version="$1"
 
-run_command 'source $HOME/.rvm/scripts/rvm'
+if [ -f "$HOME/.rvm/scripts/rvm" ]; then
+  run_command 'source $HOME/.rvm/scripts/rvm' || true
+fi
+
 run_command "rvm install $version"
 run_command "rvm $version do gem install bundler"

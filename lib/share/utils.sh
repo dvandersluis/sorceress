@@ -26,7 +26,7 @@ run_spell() {
   if [ -f "lib/spells/$1.sh" ]; then
     IFS=' ' "lib/spells/$1.sh" "${@:2}"
   else
-    return 1
+     abort "Spell not found: $1"
   fi
 }
 

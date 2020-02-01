@@ -31,12 +31,12 @@ find_manager() {
 install_manager() {
   manager=$1
   notice "Installing $manager"
-  run_spell "install/$manager" || abort "Sorry, no install script was found for $manager"
+  run_spell "install/$manager"
 }
 
 install_ruby() {
   notice "Installing ruby with $manager"
-  run_spell "install/ruby/$manager" "$version" || abort "Sorry, no install script was found for $manager"
+  run_spell "install/ruby/$manager" "$version"
 }
 
 announce "Installing ruby v$version"

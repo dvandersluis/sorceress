@@ -50,11 +50,11 @@ parser = OptionParser.new(BANNER, 32, ' ' * 2) do |opts|
   end
 
   opts.on('-p', '--pretend', desc("Don't actually run any commands, just output what would be run.")) do
-    env['PRETEND'] = 'true'
+    env['SORCERESS_PRETEND'] = 'true'
   end
 
   opts.on('-d', '--debug', desc('Display any debugging information.')) do
-    env['DEBUG'] = 'true'
+    env['SORCERESS_DEBUG'] = 'true'
   end
 end
 

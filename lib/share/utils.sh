@@ -2,11 +2,13 @@
 # shellcheck disable=SC1090
 
 debug() {
-  test -n "${DEBUG:-}"
+  debug="$(echo "${SORCERESS_DEBUG:-0}" | tr '[:upper:]' '[:lower:]')"
+  test "${debug}" != "0" -a "${debug}" != "false"
 }
 
 pretend() {
- test -n "${PRETEND:-}"
+  pretend="$(echo "${SORCERESS_PRETEND:-0}" | tr '[:upper:]' '[:lower:]')"
+  test "${pretend}" != "0" -a "${pretend}" != "false"
 }
 
 fail() {
